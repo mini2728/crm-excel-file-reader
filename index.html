@@ -179,7 +179,9 @@
 
                 json.forEach(row => {
                     const name = row['使用者'];
-                    const price = Math.round(row['金額']);
+                    const price = Math.round(Math.round(row['金額']* 100) / 100); // 四捨五入到小數點後兩位
+                    console.log("row['金額']", row['金額']);
+                    console.log("price", price);
                     const account = row['虛擬帳號'];
                     if (account == 'coupon折抵' || account == null) {
                         return;
