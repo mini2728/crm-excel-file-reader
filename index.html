@@ -114,7 +114,7 @@
 <body>
     <div class="container">
         <h1>收費帳款 Excel 文字轉換器</h1>
-        <h3>ver.24.06.14</h3>
+        <h3>ver.24.07.01</h3>
         <span>上傳excel</span>
         <input type="file" id="upload" accept=".xlsx, .xls" />
         <br/>
@@ -163,6 +163,15 @@
             return `${year}-${month}`;
         }
 
+        function getNextMonthDate(yearMonth) {
+            const [year, month] = yearMonth.split('-');
+            const date = new Date(year, month, 0); // 建立當前月份的日期物件
+            date.setMonth(date.getMonth() + 1); // 將月份加1
+            const nextMonthYear = date.getFullYear();
+            const nextMonth = (date.getMonth() + 1).toString().padStart(2, '0'); // 取得下一個月份，並補零
+            return `${nextMonthYear}-${nextMonth}-10`;
+        }
+
         async function readExcel() {
             const fileInput = document.getElementById('upload');
             const file = fileInput.files[0];
@@ -190,10 +199,11 @@
 
                     const formattedPrice = new Intl.NumberFormat('zh-TW', { style: 'decimal' }).format(price);
                     const yearMonth = getSelectedYearAndMonth();
+                    const nextMonthDate = getNextMonthDate(yearMonth); // 計算下一個月份的日期
                     const formattedText = 
                         `使用者: ${name}<br>` +
                         `${yearMonth} 期 系統開發費用 NTD $${formattedPrice}<br>` +
-                        `請於 ${yearMonth}-10 前匯款至指定帳戶<br>` +
+                        `請於 ${nextMonthDate} 前匯款至指定帳戶<br>` +
                         `銀行：(011) 上海商業儲蓄銀行<br>` +
                         `戶名： 天鏡科技股份有限公司<br>` +
                         `銀行帳號：${account}<br>`;
