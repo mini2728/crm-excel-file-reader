@@ -114,7 +114,7 @@
 <body>
     <div class="container">
         <h1>收費帳款 Excel 文字轉換器</h1>
-        <h3>ver.24.07.02</h3>
+        <h3>ver.24.08.01</h3>
         <span>上傳excel</span>
         <input type="file" id="upload" accept=".xlsx, .xls" />
         <br/>
@@ -164,8 +164,8 @@
         }
 
         function getNextMonthDate(yearMonth) {
-            const [year, month] = yearMonth.split('-');
-            const date = new Date(year, month, 0); // 建立當前月份的日期物件
+            const [year, month] = yearMonth.split('-').map(Number);
+            const date = new Date(year, month - 1); // 建立當前月份的日期物件，月份從0開始所以減1
             date.setMonth(date.getMonth() + 1); // 將月份加1
             const nextMonthYear = date.getFullYear();
             const nextMonth = (date.getMonth() + 1).toString().padStart(2, '0'); // 取得下一個月份，並補零
